@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ohdsi.fullname" . }}-custom-hosts-config
+  labels:
+  {{- include "ohdsi.labels" . | nindent 4 }}
+data:
+  hosts: {{ .Values.customHostsConfig.hosts | toYaml | indent 1 }}

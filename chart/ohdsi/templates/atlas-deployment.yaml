@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ohdsi.fullname" . }}-atlas
+  labels:
+    io.kompose.service: atlas
+  {{- include "ohdsi.labels" . | nindent 4 }}
+  annotations:
+    kompose.cmd: ../../kompose convert -f docker-compose.yml
+    kompose.version: 1.34.0 (cbf2835db)
+spec:
+  replicas: {{ .Values.atlas.replicas }}
+  selector:
+    matchLabels:
+      io.kompose.service: atlas
+    {{- include "ohdsi.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: atlas
+      {{- include "ohdsi.selectorLabels" . | nindent 8 }}
+      annotations:
+        kompose.cmd: ../../kompose convert -f docker-compose.yml
+        kompose.version: 1.34.0 (cbf2835db)
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag
+          | default .Chart.AppVersion }}
+        name: atlas
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/atlas/config-local.js
+          name: atlas-cm0
+          subPath: config-local.js
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          items:
+          - key: config-local.js
+            path: config-local.js
+          name: {{ include "ohdsi.fullname" . }}-cm0
+        name: atlas-cm0
