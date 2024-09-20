@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.customHostsConfig.hostName }}
+  labels:
+  {{- include "ohdsi.labels" . | nindent 4 }}
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: {{ .Values.customHostsConfig.hostName }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "ohdsi.fullname" . }}-webapi'
+            port:
+              number: 88
+        path: /WebAPI
+        pathType: Prefix
+      - backend:
+          service:
+            name: '{{ include "ohdsi.fullname" . }}-atlas'
+            port:
+              number: 88
+        path: /atlas
+        pathType: Prefix
+  tls:
+  - hosts:
+      - {{ .Values.customHostsConfig.hosts | toYaml }}
+    secretName: ohdsi-tls-secret
