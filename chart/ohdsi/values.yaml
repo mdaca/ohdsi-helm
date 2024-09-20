@@ -1,0 +1,56 @@
+atlas:
+  atlas:
+    image:
+      repository: ""
+      tag: ""
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  replicas: 1
+  type: ClusterIP
+cm0:
+  configLocalJs: ""
+customHostsConfig:
+  hostName: ""
+  hosts: ""
+kubernetesClusterDomain: ""
+ohdsiTlsSecret:
+  labels:
+    managedBy: Helm
+  annotations:
+    releaseName: ""
+    releaseNamespace: ""
+  tlsCrt: ""
+  tlsKey: ""
+webapi:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  replicas: 1
+  type: ""
+  webapi:
+    env:
+      javaOpts: ""
+      oauthCallbackApi: ""
+      oauthCallbackUi: ""
+      oidClientid: ""
+      oidRedirecturl: ""
+      oidUrl: ""
+      webapiDatasourceUrl: ""
+      webapiSchema: ""
+    image:
+      repository: ""
+      tag: ""
+webapiP12Secret:
+  ohdsiP12: ""
+  ohdsiP12Password:  ""
+webapiSecrets:
+  flywayDatasourcePassword: ""
+  flywayDatasourceUsername: ""
+  oidApisecret: ""
+  webapiDatasourcePassword: ""
+  webapiDatasourceUsername: ""
+  truststorePassword: ""
+  ohdsiP12: ""
