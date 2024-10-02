@@ -12,7 +12,7 @@ atlas:
 cm0:
   configLocalJs: ""
   nginxDefaultConf: ""
-  30AtlasEnvSubstSh: ""
+  AtlasEnvSubstSh: ""
 customHostsConfig:
   hostName: ""
   hosts: ""

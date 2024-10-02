@@ -3,12 +3,12 @@ entries:
   ohdsi:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-10-02T15:10:25.784406759-04:00"
+    created: "2024-10-02T15:26:02.853518705-04:00"
     description: A Helm chart for Kubernetes
-    digest: 0d2f5272b1dfc6b5134f19c510e831ea2d98121c67437d57e26e1f0069a2d235
+    digest: 4184f512e5015647484b742f1eecf8d294bb71ab87be80abe18d5bd24d7532d0
     name: ohdsi
     type: application
     urls:
     - https://raw.githubusercontent.com/mdaca/ohdsi-helm/main/chart/ohdsi/ohdsi/ohdsi-0.1.1.tgz
     version: 0.1.1
-generated: "2024-10-02T15:10:25.783811172-04:00"
+generated: "2024-10-02T15:26:02.85222917-04:00"
