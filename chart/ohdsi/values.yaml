@@ -11,6 +11,8 @@ atlas:
   type: ClusterIP
 cm0:
   configLocalJs: ""
+  nginxDefaultConf: ""
+  30AtlasEnvSubstSh: ""
 customHostsConfig:
   hostName: ""
   hosts: ""
