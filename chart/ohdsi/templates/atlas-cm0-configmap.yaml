@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "ohdsi.fullname" . }}-cm0
   labels:
-    io.kompose.service: {{ include "ohdsi.fullname" . }}-atlas
+    io.kompose.service: atlas
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
     use-subpath: "true"
