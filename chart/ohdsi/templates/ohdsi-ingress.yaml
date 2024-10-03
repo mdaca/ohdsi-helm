@@ -12,14 +12,14 @@ spec:
       paths:
       - backend:
           service:
-            name: '{{ include "ohdsi.fullname" . }}-webapi'
+            name: 'webapi'
             port:
               number: 88
         path: /WebAPI
         pathType: Prefix
       - backend:
           service:
-            name: '{{ include "ohdsi.fullname" . }}-atlas'
+            name: 'atlas'
             port:
               number: 88
         path: /atlas
