@@ -49,9 +49,9 @@ spec:
           items:
           - key: config-local.js
             path: config-local.js
-          - key: nginx-default.conf
+          - key: default.conf
             path: default.conf
-          - key: nginx-default.conf
-            path: default.conf
+          - key: 30-atlas-env-subst.sh
+            path: 30-atlas-env-subst.sh
           name: atlas-cm0
         name: atlas-cm0
