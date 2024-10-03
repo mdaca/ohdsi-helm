@@ -50,5 +50,5 @@ spec:
             path: default.conf
           - key: 30-atlas-env-subst.sh
             path: 30-atlas-env-subst.sh
-          name: {{ include "ohdsi.fullname" . }}-cm0
+          name: atlas-cm0
         name: atlas-cm0
