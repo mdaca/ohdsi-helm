@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ohdsi.fullname" . }}-atlas
+  name: atlas
   labels:
     io.kompose.service: atlas
   {{- include "ohdsi.labels" . | nindent 4 }}
@@ -27,8 +27,7 @@ spec:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion }}
         name: atlas
         ports:
         - containerPort: 8080
@@ -39,10 +38,10 @@ spec:
           name: atlas-cm0
           subPath: config-local.js
         - mountPath: /etc/nginx/conf.d/default.conf
-          name: atlas-cm1
+          name: atlas-cm0
           subPath: default.conf
         - mountPath: /docker-entrypoint.d/30-atlas-env-subst.sh
-          name: atlas-cm2
+          name: atlas-cm0
           subPath: 30-atlas-env-subst.sh
       restartPolicy: Always
       volumes:
@@ -50,17 +49,9 @@ spec:
           items:
           - key: config-local.js
             path: config-local.js
-          name: {{ include "ohdsi.fullname" . }}-cm0
+          - key: nginx-default.conf
+            path: default.conf
+          - key: nginx-default.conf
+            path: default.conf
+          name: atlas-cm0
         name: atlas-cm0
-      - configMap:
-          items:
-          - key: nginx-default.conf
-            path: default.conf
-          name: {{ include "ohdsi.fullname" . }}-cm1
-        name: atlas-cm1
-      - configMap:
-          items:
-          - key: nginx-default.conf
-            path: default.conf
-          name: {{ include "ohdsi.fullname" . }}-cm2
-        name: atlas-cm2
