@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "ohdsi.fullname" . }}-webapi
   labels:
-    io.kompose.service: webapi
+    io.kompose.service: {{ include "ohdsi.fullname" . }}-webapi
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
     kompose.cmd: ../../kompose convert -f docker-compose.yml
@@ -11,7 +11,7 @@ metadata:
 spec:
   type: {{ .Values.webapi.type }}
   selector:
-    io.kompose.service: webapi
+    io.kompose.service: {{ include "ohdsi.fullname" . }}-webapi
   {{- include "ohdsi.selectorLabels" . | nindent 4 }}
   ports:
 	{{- .Values.webapi.ports | toYaml | nindent 2 }}

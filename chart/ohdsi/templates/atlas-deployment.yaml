@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "ohdsi.fullname" . }}-atlas
   labels:
-    io.kompose.service: atlas
+    io.kompose.service: {{ include "ohdsi.fullname" . }}-atlas
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
     kompose.cmd: ../../kompose convert -f docker-compose.yml
@@ -12,12 +12,12 @@ spec:
   replicas: {{ .Values.atlas.replicas }}
   selector:
     matchLabels:
-      io.kompose.service: atlas
+      io.kompose.service: {{ include "ohdsi.fullname" . }}-atlas
     {{- include "ohdsi.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        io.kompose.service: atlas
+        io.kompose.service: {{ include "ohdsi.fullname" . }}-atlas
       {{- include "ohdsi.selectorLabels" . | nindent 8 }}
       annotations:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
@@ -28,7 +28,7 @@ spec:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
         image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion }}
-        name: atlas
+        name: {{ include "ohdsi.fullname" . }}-atlas
         ports:
         - containerPort: 8080
           protocol: TCP
