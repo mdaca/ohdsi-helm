@@ -73,8 +73,7 @@ spec:
               name: {{ include "ohdsi.fullname" . }}-webapi-secrets
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
         name: webapi
         ports:
         - containerPort: 8080
