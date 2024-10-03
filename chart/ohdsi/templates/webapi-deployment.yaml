@@ -29,12 +29,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: FLYWAY_DATASOURCE_PASSWORD
-              name: {{ include "ohdsi.fullname" . }}-webapi-secrets
+              name: webapi-secrets
         - name: FLYWAY_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
               key: FLYWAY_DATASOURCE_USERNAME
-              name: {{ include "ohdsi.fullname" . }}-webapi-secrets
+              name: webapi-secrets
         - name: OAUTH_CALLBACK_API
           value: {{ quote .Values.webapi.webapi.env.oauthCallbackApi }}
         - name: OAUTH_CALLBACK_UI
@@ -43,7 +43,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: OID_APISECRET
-              name: {{ include "ohdsi.fullname" . }}-webapi-secrets
+              name: webapi-secrets
         - name: OID_CLIENTID
           value: {{ quote .Values.webapi.webapi.env.oidClientid }}
         - name: OID_REDIRECTURL
@@ -54,14 +54,14 @@ spec:
           valueFrom:
             secretKeyRef:
               key: WEBAPI_DATASOURCE_PASSWORD
-              name: {{ include "ohdsi.fullname" . }}-webapi-secrets
+              name: webapi-secrets
         - name: WEBAPI_DATASOURCE_URL
           value: {{ quote .Values.webapi.webapi.env.webapiDatasourceUrl }}
         - name: WEBAPI_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
               key: WEBAPI_DATASOURCE_USERNAME
-              name: {{ include "ohdsi.fullname" . }}-webapi-secrets
+              name: webapi-secrets
         - name: WEBAPI_SCHEMA
           value: {{ quote .Values.webapi.webapi.env.webapiSchema }}
         - name: JAVA_OPTS
@@ -70,11 +70,11 @@ spec:
           valueFrom:
             secretKeyRef:
               key: TRUSTSTORE_PASSWORD
-              name: {{ include "ohdsi.fullname" . }}-webapi-secrets
+              name: webapi-secrets
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
         image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
-        name: {{ include "ohdsi.fullname" . }}-webapi
+        name: webapi
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -91,4 +91,4 @@ spec:
           items:
           - key: ohdsi.p12
             path: ohdsi.p12
-          secretName: {{ include "ohdsi.fullname" . }}-webapi-secrets
+          secretName: webapi-secrets
