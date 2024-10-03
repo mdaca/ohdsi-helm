@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "ohdsi.fullname" . }}-webapi
   labels:
-    io.kompose.service: webapi
+    io.kompose.service: {{ include "ohdsi.fullname" . }}-webapi
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
     kompose.cmd: ../../kompose convert -f docker-compose.yml
@@ -12,12 +12,12 @@ spec:
   replicas: {{ .Values.webapi.replicas }}
   selector:
     matchLabels:
-      io.kompose.service: webapi
+      io.kompose.service: {{ include "ohdsi.fullname" . }}-webapi
     {{- include "ohdsi.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        io.kompose.service: webapi
+        io.kompose.service: {{ include "ohdsi.fullname" . }}-webapi
       {{- include "ohdsi.selectorLabels" . | nindent 8 }}
       annotations:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
@@ -73,8 +73,8 @@ spec:
               name: {{ include "ohdsi.fullname" . }}-webapi-secrets
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
-        name: webapi
+        image: {{ .Values.webapi.webapi.image.repository }}: {{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
+        name: {{ include "ohdsi.fullname" . }}-webapi
         ports:
         - containerPort: 8080
           protocol: TCP

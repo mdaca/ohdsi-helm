@@ -3,11 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ include "ohdsi.fullname" . }}-cm0
   labels:
-    io.kompose.service: atlas
+    io.kompose.service: {{ include "ohdsi.fullname" . }}-atlas
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
     use-subpath: "true"
 data:
   config-local.js: {{ .Values.cm0.configLocalJs | toYaml | indent 1 }}
-  nginx-default.conf: {{ .Values.cm0.nginxDefaultConf | toYaml | indent 1 }}
+  default.conf: {{ .Values.cm0.nginxDefaultConf | toYaml | indent 1 }}
   30-atlas-env-subst.sh: {{ .Values.cm0.AtlasEnvSubstSh | toYaml | indent 1 }}
