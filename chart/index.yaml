@@ -9,6 +9,6 @@ entries:
     name: ohdsi
     type: application
     urls:
-    - https://raw.githubusercontent.com/mdaca/ohdsi-helm/main/chart/ohdsi/ohdsi/ohdsi-0.2.1.tgz
+    - https://raw.githubusercontent.com/mdaca/ohdsi-helm/main/chart/ohdsi/ohdsi-0.2.1.tgz
     version: 0.2.1
 generated: "2024-11-05T13:56:44.240628781-05:00"
