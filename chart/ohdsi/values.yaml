@@ -50,7 +50,7 @@ webapi:
     image:
       repository: ""
       tag: ""
- imagePullSecrets:
+  imagePullSecrets:
     - name: "" 
 webapiP12Secret:
   ohdsiP12: ""
