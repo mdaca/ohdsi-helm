@@ -14,8 +14,11 @@ cm0:
   nginxDefaultConf: ""
   AtlasEnvSubstSh: ""
 customHostsConfig:
-  hostName: ""
+hostName: ""
   hosts: ""
+  tls:
+    - secretName: ""
+      hosts: ""
 kubernetesClusterDomain: ""
 ohdsiTlsSecret:
   labels:
