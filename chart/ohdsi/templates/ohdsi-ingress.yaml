@@ -14,14 +14,14 @@ spec:
           service:
             name: 'webapi'
             port:
-              number: 88
+              number: 80
         path: /WebAPI
         pathType: Prefix
       - backend:
           service:
             name: 'atlas'
             port:
-              number: 88
+              number: 80
         path: /atlas
         pathType: Prefix
   tls:
