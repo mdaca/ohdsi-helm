@@ -75,4 +75,4 @@ jobs:
             echo "Update index and package"
             cd ./chart/
             helm repo index --url https://raw.githubusercontent.com/mdaca/ohdsi-helm/$BRANCH_NAME/chart/ ./
-          cat ./index.yaml
+            cat ./index.yaml
