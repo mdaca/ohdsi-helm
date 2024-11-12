@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    runs-on: WyriHaximus/github-action-helm3@v4.0.1
+    runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v4
       - name: Get version from commit message
@@ -69,8 +69,10 @@ jobs:
           echo "Version updated to ${NEW_VERSION}"
           
       - name: Update Helm chart index
-        run: |
-          echo "Update index and package"
-          cd ./chart/
-          helm repo index --url https://raw.githubusercontent.com/mdaca/ohdsi-helm/$BRANCH_NAME/chart/ ./
+      - uses: WyriHaximus/github-action-helm3@v3
+        with: 
+          run: |
+            echo "Update index and package"
+            cd ./chart/
+            helm repo index --url https://raw.githubusercontent.com/mdaca/ohdsi-helm/$BRANCH_NAME/chart/ ./
           cat ./index.yaml
