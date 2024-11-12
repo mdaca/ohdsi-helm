@@ -50,7 +50,7 @@ jobs:
           MAJOR=${VERSION_PARTS[0]}
           MINOR=${VERSION_PARTS[1]}
           PATCH=${VERSION_PARTS[2]}
-          if [ "$VERSION_TYPE" == "none" ]; then
+          if [ "$VERSION_TYPE" != "none" ]; then
             
             if [ -f "ohdsi-$MAJOR.$MINOR.$PATCH.tgz" ]; then
               echo "deleting current package"
