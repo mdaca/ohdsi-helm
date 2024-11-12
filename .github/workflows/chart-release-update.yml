@@ -29,8 +29,8 @@ jobs:
           VERSION_TYPE=$(echo "$COMMIT_MESSAGE" | grep -oP '\[(major|minor|patch)\]' | tr -d '[]')
           
           if [ -z "$VERSION_TYPE" ]; then
-            echo "No versioning flag found in commit message. Defaulting to 'patch'."
-            VERSION_TYPE="patch"  # Default to 'patch' if no version flag is found
+            echo "No versioning flag found in commit message. Defaulting to 'none'."
+            VERSION_TYPE="none"  # Default to none if no version flag is found
           fi
           
           echo "VERSION_TYPE=$VERSION_TYPE" >> $GITHUB_ENV
@@ -44,36 +44,39 @@ jobs:
       - name: Update Helm Chart Version
         run: |
           echo "Updating Helm chart version to $VERSION_TYPE"
-          
           cd ./chart/ohdsi/
           CURRENT_VERSION=$(grep '^version:' Chart.yaml | awk '{print $2}')
           IFS='.' read -r -a VERSION_PARTS <<< "$CURRENT_VERSION"
           MAJOR=${VERSION_PARTS[0]}
           MINOR=${VERSION_PARTS[1]}
           PATCH=${VERSION_PARTS[2]}
-          
-          if [ -f "ohdsi-$MAJOR.$MINOR.$PATCH.tgz" ]; then
-            echo "deleting current package"
-            rm ohdsi-$MAJOR.$MINOR.$PATCH.tgz
-          fi
-          
-          shopt -s nocasematch
-          if [ "$VERSION_TYPE" == "major" ]; then
-            MAJOR=$((MAJOR + 1))
-            MINOR=0
-            PATCH=0
-          elif [ "$VERSION_TYPE" == "minor" ]; then
-            MINOR=$((MINOR + 1))
-            PATCH=0
-          elif [ "$VERSION_TYPE" == "patch" ]; then
-            PATCH=$((PATCH + 1))
+          if [ "$VERSION_TYPE" == "none" ]; then
+            
+            if [ -f "ohdsi-$MAJOR.$MINOR.$PATCH.tgz" ]; then
+              echo "deleting current package"
+              rm ohdsi-$MAJOR.$MINOR.$PATCH.tgz
+            fi
+            
+            shopt -s nocasematch
+            if [ "$VERSION_TYPE" == "major" ]; then
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+            elif [ "$VERSION_TYPE" == "minor" ]; then
+              MINOR=$((MINOR + 1))
+              PATCH=0
+            elif [ "$VERSION_TYPE" == "patch" ]; then
+              PATCH=$((PATCH + 1))
+            else
+              echo "Usage: $0 {major|minor|patch}"
+            fi
+            
+            NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+            sed -i "s/^version: .*/version: ${NEW_VERSION}/" Chart.yaml
+            echo "Version updated to ${NEW_VERSION}"
           else
-            echo "Usage: $0 {major|minor|patch}"
+            echo "Version update skipped, none provided. Still v$CURRENT_VERSION"
           fi
-          
-          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
-          sed -i "s/^version: .*/version: ${NEW_VERSION}/" Chart.yaml
-          echo "Version updated to ${NEW_VERSION}"
 
       - name: Update Helm chart index
         uses: WyriHaximus/github-action-helm3@v3
@@ -81,7 +84,9 @@ jobs:
           exec: |
             echo "Update index and package"
             cd ./chart/
-            helm package ohdsi --destination ./ohdsi
+            if [ ! -f ./*.tgz ]; then         
+              helm package ohdsi --destination ./ohdsi
+            fi
             helm repo index --url https://raw.githubusercontent.com/mdaca/ohdsi-helm/$BRANCH_NAME/chart/ ./
             cat ./index.yaml
 
