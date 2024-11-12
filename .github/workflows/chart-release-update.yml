@@ -62,16 +62,16 @@ jobs:
           rm ohdsi-$MAJOR.$MINOR.$PATCH.tgz
           shopt -s nocasematch
           case $VERSION_TYPE in
-            major)
+            "major")
               MAJOR=$((MAJOR + 1))
               MINOR=0
               PATCH=0
               ;;
-            minor)
+            "minor")
               MINOR=$((MINOR + 1))
               PATCH=0
               ;;
-            patch)
+            "patch")
               PATCH=$((PATCH + 1))
             *)
               echo "Usage: $0 {major|minor|patch}"
