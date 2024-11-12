@@ -24,7 +24,7 @@ spec:
         kompose.version: 1.34.0 (cbf2835db)
     spec:
       imagePullSecrets:
-        - name: {{ .Values.webapi.imagePullSecrets.name }}
+        - name: {{ .Values.webapi.webapi.imagePullSecrets.name }}
       containers:
       - env:
         - name: FLYWAY_DATASOURCE_PASSWORD
