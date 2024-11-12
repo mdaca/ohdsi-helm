@@ -1,0 +1,89 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Update Helm Chart Release
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Get the latest commit message
+      - name: Get version from commit message
+        id: get_commit_message
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MESSAGE"
+          # Extract the versioning flag (major, minor, or patch) from the commit message
+          VERSION_TYPE=$(echo "$COMMIT_MESSAGE" | grep -oP '\[(major|minor|patch)\]' | tr -d '[]')
+          
+          if [ -z "$VERSION_TYPE" ]; then
+            echo "No versioning flag found in commit message. Defaulting to 'patch'."
+            VERSION_TYPE="patch"  # Default to 'patch' if no version flag is found
+          fi
+          
+          echo "VERSION_TYPE=$VERSION_TYPE" >> $GITHUB_ENV
+
+      - name: Get Branch Name
+        run: |          
+          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          echo "Current branch: $CURRENT_BRANCH"
+          echo "BRANCH_NAME=$CURRENT_BRANCH" >> $GITHUB_ENV  # Save the branch name for later steps
+
+      # Runs a single command using the runners shell
+      - name: Update Helm Chart Version
+        run: |
+          echo "Updating Helm chart version to $VERSION_TYPE"
+          
+          cd ./chart/ohdsi/
+          CURRENT_VERSION=$(grep '^version:' Chart.yaml | awk '{print $2}')
+          IFS='.' read -r -a VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+          echo "deleting current package"
+          rm ohdsi-$MAJOR.$MINOR.$PATCH.tgz
+          shopt -s nocasematch
+          case $VERSION_TYPE in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+            *)
+              echo "Usage: $0 {major|minor|patch}"
+              ;;
+            esac
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          sed -i "s/^version: .*/version: ${NEW_VERSION}/" Chart.yaml
+          echo "Version updated to ${NEW_VERSION}"
+          
+      - name: Update Helm chart index
+        run: |
+          echo "Update index and package"
+          cd ./chart/
+          helm repo index --url https://raw.githubusercontent.com/mdaca/ohdsi-helm/$BRANCH_NAME/chart/ ./
+          cat ./index.yaml
