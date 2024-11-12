@@ -43,7 +43,7 @@ jobs:
 
       - name: Get Branch Name
         run: |          
-          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          CURRENT_BRANCH=${GITHUB_REF#refs/heads/} 
           echo "Current branch: $CURRENT_BRANCH"
           echo "BRANCH_NAME=$CURRENT_BRANCH" >> $GITHUB_ENV  # Save the branch name for later steps
 
