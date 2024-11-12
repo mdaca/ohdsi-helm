@@ -16,7 +16,6 @@ cm0:
   nginxDefaultConf: ""
   AtlasEnvSubstSh: ""
 customHostsConfig:
-hostName: ""
   hosts: ""
   tls:
     - secretName: ""
