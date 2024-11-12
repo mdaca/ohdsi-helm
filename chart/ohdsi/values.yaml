@@ -3,6 +3,8 @@ atlas:
     image:
       repository: ""
       tag: ""
+  imagePullSecrets:
+    - name: ""
   ports:
   - name: http
     port: 80
@@ -14,8 +16,10 @@ cm0:
   nginxDefaultConf: ""
   AtlasEnvSubstSh: ""
 customHostsConfig:
-  hostName: ""
   hosts: ""
+  tls:
+    - secretName: ""
+      hosts: ""
 kubernetesClusterDomain: ""
 ohdsiTlsSecret:
   labels:
@@ -45,6 +49,8 @@ webapi:
     image:
       repository: ""
       tag: ""
+  imagePullSecrets:
+    - name: "" 
 webapiP12Secret:
   ohdsiP12: ""
   ohdsiP12Password:  ""
