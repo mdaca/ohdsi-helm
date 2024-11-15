@@ -51,9 +51,6 @@ webapi:
       tag: ""
   imagePullSecrets:
     - name: "" 
-webapiP12Secret:
-  ohdsiP12: ""
-  ohdsiP12Password:  ""
 webapiSecrets:
   flywayDatasourcePassword: ""
   flywayDatasourceUsername: ""
