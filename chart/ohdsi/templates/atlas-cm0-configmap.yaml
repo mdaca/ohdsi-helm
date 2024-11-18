@@ -10,4 +10,3 @@ metadata:
 data:
   config-local.js: {{ .Values.cm0.configLocalJs | toYaml | indent 1 }}
   default.conf: {{ .Values.cm0.nginxDefaultConf | toYaml | indent 1 }}
-  30-atlas-env-subst.sh: {{ .Values.cm0.AtlasEnvSubstSh | toYaml | indent 1 }}
