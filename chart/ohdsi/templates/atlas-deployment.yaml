@@ -31,6 +31,7 @@ spec:
           value: {{ quote .Values.kubernetesClusterDomain }}
         image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion }}
         imagePullSecrets: {{ .Values.atlas.atlas.image.pullSecrets }}
+        imagePullPolicy: Always
         name: atlas
         ports:
         - containerPort: 8080
