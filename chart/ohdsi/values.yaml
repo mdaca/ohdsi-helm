@@ -3,8 +3,8 @@ atlas:
     image:
       repository: ""
       tag: ""
-  imagePullSecrets:
-    - name: ""
+    imagePullSecrets:
+      - name: ""
   ports:
   - name: http
     port: 80
@@ -49,8 +49,8 @@ webapi:
     image:
       repository: ""
       tag: ""
-  imagePullSecrets:
-    - name: "" 
+    imagePullSecrets:
+      - name: "" 
 webapiSecrets:
   flywayDatasourcePassword: ""
   flywayDatasourceUsername: ""
