@@ -23,8 +23,6 @@ spec:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
         kompose.version: 1.34.0 (cbf2835db)
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.webapi.webapi.imagePullSecrets.name }}  # Correct placement here, at the spec level
       imagePullPolicy: Always
       containers:
         - name: webapi
