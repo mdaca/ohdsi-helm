@@ -27,7 +27,7 @@ spec:
       containers:
         - name: webapi
           image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
-          imagePullSecrets: {{ .Values.webapi.webapi.image.pullSecrets }
+          imagePullSecrets: {{ .Values.webapi.webapi.image.pullSecrets }}
           env:
             - name: FLYWAY_DATASOURCE_PASSWORD
               valueFrom:
