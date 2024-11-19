@@ -14,7 +14,6 @@ atlas:
 cm0:
   configLocalJs: ""
   nginxDefaultConf: ""
-  AtlasEnvSubstSh: ""
 customHostsConfig:
   hosts: ""
   tls:
