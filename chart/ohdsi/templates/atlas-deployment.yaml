@@ -23,12 +23,13 @@ spec:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
         kompose.version: 1.34.0 (cbf2835db)
     spec:
+      imagePullSecrets: {{ .Values.atlas.atlas.image.pullSecrets }}
       containers:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion }}
-        imagePullSecrets: {{ .Values.atlas.atlas.image.pullSecrets }}
+        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion 
+        imagePullPolicy: Always
         name: atlas
         ports:
         - containerPort: 8080
