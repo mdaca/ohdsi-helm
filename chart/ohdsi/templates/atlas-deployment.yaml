@@ -23,7 +23,7 @@ spec:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
         kompose.version: 1.34.0 (cbf2835db)
     spec:
-      imagePullSecrets: {{ .Values.atlas.atlas.image.pullSecrets }}
+      imagePullSecrets: {{ .Values.atlas.image.pullSecrets }}
       containers:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
