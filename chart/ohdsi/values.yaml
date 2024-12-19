@@ -3,8 +3,7 @@ atlas:
     image:
       repository: ""
       tag: ""
-  imagePullSecrets:
-    - name: ""
+  imagePullSecrets: ""
   ports:
   - name: http
     port: 80
