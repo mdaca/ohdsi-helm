@@ -1,4 +1,5 @@
 atlas:
+  imagePullSecrets: ""
   atlas:
     image:
       repository: ""
