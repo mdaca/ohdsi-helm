@@ -1,10 +1,9 @@
 atlas:
+  imagePullSecrets: ""
   atlas:
     image:
       repository: ""
       tag: ""
-    imagePullSecrets:
-      - name: ""
   ports:
   - name: http
     port: 80
@@ -14,6 +13,7 @@ atlas:
 cm0:
   configLocalJs: ""
   nginxDefaultConf: ""
+  AtlasEnvSubstSh: ""
 customHostsConfig:
   hosts: ""
   tls:
@@ -35,9 +35,10 @@ webapi:
     targetPort: 8080
   replicas: 1
   type: ""
+  imagePullSecrets: ""
   webapi:
     env:
-      javaOpts: ""
+      catalinaOpts: ""
       oauthCallbackApi: ""
       oauthCallbackUi: ""
       oidClientid: ""
@@ -48,8 +49,9 @@ webapi:
     image:
       repository: ""
       tag: ""
-    imagePullSecrets:
-      - name: "" 
+webapiP12Secret:
+  ohdsiP12: ""
+  ohdsiP12Password:  ""
 webapiSecrets:
   flywayDatasourcePassword: ""
   flywayDatasourceUsername: ""
