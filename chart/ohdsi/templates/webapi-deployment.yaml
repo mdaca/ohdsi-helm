@@ -23,8 +23,7 @@ spec:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
         kompose.version: 1.34.0 (cbf2835db)
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.webapi.webapi.imagePullSecrets.name }}
+      imagePullSecrets: {{ .Values.atlas.atlas.image.pullSecrets }}
       containers:
       - env:
         - name: FLYWAY_DATASOURCE_PASSWORD
