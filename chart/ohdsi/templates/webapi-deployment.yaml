@@ -66,8 +66,8 @@ spec:
               name: webapi-secrets
         - name: WEBAPI_SCHEMA
           value: {{ quote .Values.webapi.webapi.env.webapiSchema }}
-        - name: JAVA_OPTS
-          value: {{ quote .Values.webapi.webapi.env.javaOpts }}
+        - name: CATALINA_OPTS
+          value: {{ quote .Values.webapi.webapi.env.catalinaOpts }}
         - name: TRUSTSTORE_PASSWORD
           valueFrom:
             secretKeyRef:
