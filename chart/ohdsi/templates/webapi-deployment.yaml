@@ -23,73 +23,74 @@ spec:
         kompose.cmd: ../../kompose convert -f docker-compose.yml
         kompose.version: 1.34.0 (cbf2835db)
     spec:
-      imagePullPolicy: Always
+      imagePullSecrets: {{ .Values.webapi.image.pullSecrets }}
       containers:
-        - name: webapi
-          image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
-          imagePullSecrets: {{ .Values.webapi.webapi.image.pullSecrets }}
-          env:
-            - name: FLYWAY_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: FLYWAY_DATASOURCE_PASSWORD
-                  name: webapi-secrets
-            - name: FLYWAY_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: FLYWAY_DATASOURCE_USERNAME
-                  name: webapi-secrets
-            - name: OAUTH_CALLBACK_API
-              value: {{ quote .Values.webapi.webapi.env.oauthCallbackApi }}
-            - name: OAUTH_CALLBACK_UI
-              value: {{ quote .Values.webapi.webapi.env.oauthCallbackUi }}
-            - name: OID_APISECRET
-              valueFrom:
-                secretKeyRef:
-                  key: OID_APISECRET
-                  name: webapi-secrets
-            - name: OID_CLIENTID
-              value: {{ quote .Values.webapi.webapi.env.oidClientid }}
-            - name: OID_REDIRECTURL
-              value: {{ quote .Values.webapi.webapi.env.oidRedirecturl }}
-            - name: OID_URL
-              value: {{ quote .Values.webapi.webapi.env.oidUrl }}
-            - name: WEBAPI_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: WEBAPI_DATASOURCE_PASSWORD
-                  name: webapi-secrets
-            - name: WEBAPI_DATASOURCE_URL
-              value: {{ quote .Values.webapi.webapi.env.webapiDatasourceUrl }}
-            - name: WEBAPI_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: WEBAPI_DATASOURCE_USERNAME
-                  name: webapi-secrets
-            - name: WEBAPI_SCHEMA
-              value: {{ quote .Values.webapi.webapi.env.webapiSchema }}
-            - name: JAVA_OPTS
-              value: {{ quote .Values.webapi.webapi.env.javaOpts }}
-            - name: TRUSTSTORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: TRUSTSTORE_PASSWORD
-                  name: webapi-secrets
-            - name: KUBERNETES_CLUSTER_DOMAIN
-              value: {{ quote .Values.kubernetesClusterDomain }}
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-          volumeMounts:
-            - mountPath: /var/lib/ohdsi/webapi/ohdsi.p12
-              name: ohdsi-truststore-volume
-              readOnly: true
-              subPath: ohdsi.p12
+      - env:
+        - name: FLYWAY_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: FLYWAY_DATASOURCE_PASSWORD
+              name: webapi-secrets
+        - name: FLYWAY_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: FLYWAY_DATASOURCE_USERNAME
+              name: webapi-secrets
+        - name: OAUTH_CALLBACK_API
+          value: {{ quote .Values.webapi.webapi.env.oauthCallbackApi }}
+        - name: OAUTH_CALLBACK_UI
+          value: {{ quote .Values.webapi.webapi.env.oauthCallbackUi }}
+        - name: OID_APISECRET
+          valueFrom:
+            secretKeyRef:
+              key: OID_APISECRET
+              name: webapi-secrets
+        - name: OID_CLIENTID
+          value: {{ quote .Values.webapi.webapi.env.oidClientid }}
+        - name: OID_REDIRECTURL
+          value: {{ quote .Values.webapi.webapi.env.oidRedirecturl }}
+        - name: OID_URL
+          value: {{ quote .Values.webapi.webapi.env.oidUrl }}
+        - name: WEBAPI_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: WEBAPI_DATASOURCE_PASSWORD
+              name: webapi-secrets
+        - name: WEBAPI_DATASOURCE_URL
+          value: {{ quote .Values.webapi.webapi.env.webapiDatasourceUrl }}
+        - name: WEBAPI_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: WEBAPI_DATASOURCE_USERNAME
+              name: webapi-secrets
+        - name: WEBAPI_SCHEMA
+          value: {{ quote .Values.webapi.webapi.env.webapiSchema }}
+        - name: CATALINA_OPTS
+          value: {{ quote .Values.webapi.webapi.env.catalinaOpts }}
+        - name: TRUSTSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: TRUSTSTORE_PASSWORD
+              name: webapi-secrets
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.webapi.webapi.image.repository }}:{{ .Values.webapi.webapi.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: Always
+        name: webapi
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/ohdsi/webapi/ohdsi.p12
+          name: ohdsi-truststore-volume
+          readOnly: true
+          subPath: ohdsi.p12
       restartPolicy: Always
       volumes:
-        - name: ohdsi-truststore-volume
-          secret:
-            items:
-              - key: ohdsi.p12
-                path: ohdsi.p12
-            secretName: webapi-secrets
+      - name: ohdsi-truststore-volume
+        secret:
+          items:
+          - key: ohdsi.p12
+            path: ohdsi.p12
+          secretName: webapi-secrets
