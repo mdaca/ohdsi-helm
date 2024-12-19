@@ -28,7 +28,8 @@ spec:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion
+        image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: Always
         name: atlas
         ports:
         - containerPort: 8080
