@@ -38,7 +38,7 @@ webapi:
   type: ""
   webapi:
     env:
-      javaOpts: ""
+      catalinaOpts: ""
       oauthCallbackApi: ""
       oauthCallbackUi: ""
       oidClientid: ""
