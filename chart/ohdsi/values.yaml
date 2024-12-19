@@ -36,6 +36,7 @@ webapi:
     targetPort: 8080
   replicas: 1
   type: ""
+  imagePullSecrets: ""
   webapi:
     env:
       catalinaOpts: ""
@@ -49,8 +50,6 @@ webapi:
     image:
       repository: ""
       tag: ""
-  imagePullSecrets:
-    - name: "" 
 webapiP12Secret:
   ohdsiP12: ""
   ohdsiP12Password:  ""
