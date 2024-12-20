@@ -12,17 +12,10 @@ spec:
       paths:
       - backend:
           service:
-            name: 'webapi'
-            port:
-              number: 80
-        path: /WebAPI
-        pathType: Prefix
-      - backend:
-          service:
             name: 'atlas'
             port:
               number: 80
-        path: /atlas
+        path: /
         pathType: Prefix
   tls:
   - hosts:
