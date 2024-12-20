@@ -3,25 +3,25 @@ kind: Deployment
 metadata:
   name: atlas
   labels:
-    io.kompose.service: atlas
+    app.kubernetes.io/name: atlas
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/instance: ohdsi-atlas
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
-    kompose.cmd: ../../kompose convert -f docker-compose.yml
-    kompose.version: 1.34.0 (cbf2835db)
+    app.kubernetes.io/name: atlas
 spec:
   replicas: {{ .Values.atlas.replicas }}
   selector:
     matchLabels:
-      io.kompose.service: atlas
+      app.kubernetes.io/name: atlas
     {{- include "ohdsi.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        io.kompose.service: atlas
+        app.kubernetes.io/name: atlas
       {{- include "ohdsi.selectorLabels" . | nindent 8 }}
       annotations:
-        kompose.cmd: ../../kompose convert -f docker-compose.yml
-        kompose.version: 1.34.0 (cbf2835db)
+        app.kubernetes.io/name: atlas
     spec:
       imagePullSecrets:
       {{- toYaml .Values.atlas.imagePullSecrets | nindent 8 }}
