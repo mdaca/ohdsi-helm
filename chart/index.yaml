@@ -3,12 +3,12 @@ entries:
   ohdsi:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2024-12-20T17:03:40.389566886Z"
+    created: "2024-12-20T17:04:58.64801721Z"
     description: A Helm chart for ohdsi's atlas and webapi deployments.
-    digest: 937926670ab72b756ffd1dbfc0669000a046a72ec4b078209b590000b368f0de
+    digest: 484c833a67653ebcc8f2cf9e082ac98f03e01f2d66b1d435b2c4c9614917f854
     name: ohdsi
     type: application
     urls:
     - https://raw.githubusercontent.com/mdaca/ohdsi-helm/develop/chart/ohdsi/ohdsi-0.1.6.tgz
     version: 0.1.6
-generated: "2024-12-20T17:03:40.387154488Z"
+generated: "2024-12-20T17:04:58.646646933Z"
