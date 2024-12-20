@@ -3,25 +3,25 @@ kind: Deployment
 metadata:
   name: webapi
   labels:
-    io.kompose.service: webapi
+    app.kubernetes.io/name: webapi
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/instance: ohdsi-webapi
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
-    kompose.cmd: ../../kompose convert -f docker-compose.yml
-    kompose.version: 1.34.0 (cbf2835db)
+    app.kubernetes.io/name: webapi
 spec:
   replicas: {{ .Values.webapi.replicas }}
   selector:
     matchLabels:
-      io.kompose.service: webapi
+      app.kubernetes.io/name: webapi
     {{- include "ohdsi.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        io.kompose.service: webapi
+        app.kubernetes.io/name: webapi
       {{- include "ohdsi.selectorLabels" . | nindent 8 }}
       annotations:
-        kompose.cmd: ../../kompose convert -f docker-compose.yml
-        kompose.version: 1.34.0 (cbf2835db)
+        app.kubernetes.io/name: webapi
     spec:
       imagePullSecrets:
       {{- toYaml .Values.webapi.imagePullSecrets | nindent 8 }}
