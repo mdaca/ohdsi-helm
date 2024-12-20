@@ -37,7 +37,7 @@ spec:
           protocol: TCP
         resources: {}
         volumeMounts:
-        - mountPath: /etc/atlas/config-local.js
+        - mountPath: /usr/share/nginx/html/atlas/js/config-local.js
           name: atlas-cm0
           subPath: config-local.js
         - mountPath: /etc/nginx/conf.d/default.conf
