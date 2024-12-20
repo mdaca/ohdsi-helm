@@ -1,5 +1,6 @@
 atlas:
-  imagePullSecrets: ""
+  imagePullSecrets: 
+  - name: ""
   atlas:
     image:
       repository: ""
@@ -35,7 +36,8 @@ webapi:
     targetPort: 8080
   replicas: 1
   type: ""
-  imagePullSecrets: ""
+  imagePullSecrets: 
+  - name: ""
   webapi:
     env:
       catalinaOpts: ""
