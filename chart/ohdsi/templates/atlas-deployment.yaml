@@ -43,9 +43,6 @@ spec:
         - mountPath: /etc/nginx/conf.d/default.conf
           name: atlas-cm0
           subPath: default.conf
-        - mountPath: /docker-entrypoint.d/30-atlas-env-subst.sh
-          name: atlas-cm0
-          subPath: 30-atlas-env-subst.sh
       restartPolicy: Always
       volumes:
       - configMap:
@@ -54,7 +51,5 @@ spec:
             path: config-local.js
           - key: default.conf
             path: default.conf
-          - key: 30-atlas-env-subst.sh
-            path: 30-atlas-env-subst.sh
           name: atlas-cm0
         name: atlas-cm0
