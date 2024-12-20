@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: atlas
   labels:
-    io.kompose.service: atlas
   {{- include "ohdsi.labels" . | nindent 4 }}
   annotations:
     kompose.cmd: ../../kompose convert -f docker-compose.yml
