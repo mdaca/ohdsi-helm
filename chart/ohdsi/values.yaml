@@ -1,5 +1,6 @@
 atlas:
-  imagePullSecrets: ""
+  imagePullSecrets:
+  - name: ""
   atlas:
     image:
       repository: ""
@@ -29,6 +30,8 @@ ohdsiTlsSecret:
   tlsCrt: ""
   tlsKey: ""
 webapi:
+  imagePullSecrets:
+  - name: ""
   ports:
   - name: http
     port: 80
