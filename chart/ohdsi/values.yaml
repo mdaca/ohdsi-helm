@@ -3,6 +3,8 @@ atlas:
   - name: ""
   atlas:
     image:
+      env:
+        webapiUrl: ""
       repository: ""
       tag: ""
   ports:
