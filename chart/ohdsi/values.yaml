@@ -2,9 +2,9 @@ atlas:
   imagePullSecrets: 
   - name: ""
   atlas:
+    env:
+      webapiUrl: ""
     image:
-      env:
-        webapiUrl: ""
       repository: ""
       tag: ""
   ports:
