@@ -29,6 +29,8 @@ spec:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
+        - name: WEBAPI_URL
+          value: {{ quote .Values.webapiUrl }}
         image: {{ .Values.atlas.atlas.image.repository }}:{{ .Values.atlas.atlas.image.tag }}
         imagePullPolicy: Always
         name: atlas
